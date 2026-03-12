@@ -1,27 +1,40 @@
-fn reverse(pair: (i32, bool)) -> (bool, i32) {
-    let (val1, val2) = pair;
+use std::fmt;
 
-    return (val2, val1);
+fn reverse(pair: (i32, String)) -> (String, i32) {
+    let (int_params, str_params) = pair;
+
+    return (str_params, int_params);
 }
 
-#[derive(Debug)]
-struct Matrix(f32, f32, f32, f32);
+fn matrix_reverse(matrix: Matrix) -> Matrix{
+    let Matrix(a, b, c, d) = matrix;
+    Matrix(d, c, b, a)
+}
+
+fn matrix_transpose(matrix: Matrix) -> Matrix {
+    let Matrix(a, b, c, d) = matrix;
+    Matrix(a, c, b, d)
+}
+#[derive(Debug, Clone, PartialEq, Eq, Copy)]
+struct Matrix(i32, i32, i32, i32);
+
+impl fmt::Display for Matrix {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "({}, {}, {}, {})", self.0, self.1, self.2, self.3)
+    }   
+}
 
 fn main() {
-    let long_tuple = (
-        1u8, 2u16, 3u32, 4u64, -1i8, -2i16, -3i32, -4i64, 0.1f32, 0.2f64, 'a', true,
+    let long_tule = (10, String::from("Takam"), true);
+    let matrix = Matrix(1, 2, 3, 4);
+
+    println!("Hello, world!");
+    println!(
+        "I want to reverse (10, 'Takam') => {:?}",
+        reverse((10, String::from("Takam")))
     );
-
-    let tuples_or_tuple = ((1u32, 10, "Takam"), ("John", 1));
-
-    let val = reverse((23, false));
-
-    println!("First values is {} ", long_tuple.0);
-    println!("Last values is {} ", long_tuple.11);
-    println!("Last values is {:?} ", tuples_or_tuple.0);
-    println!("Last values is {:?} ", val.1);
-
-    let matrix = Matrix(1.1, 1.2, 2.1, 2.2);
-    println!("{:?}", matrix);
-    // println!("{:?}", transpo matrix);
+    println!("Long tuple: {:?}", long_tule);
+    println!("Ma Matrix: {}", matrix);
+    println!("Ma Matrix transpose: {}", matrix_transpose(matrix));
+    println!("Ma Matrix reverse: {}", matrix_reverse(matrix));
 }
